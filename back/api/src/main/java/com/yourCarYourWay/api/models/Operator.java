@@ -10,10 +10,10 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Operators")
+@Table(name = "operators")
 public class Operator {
 
-    @Id private long id;
+    @Id private Long id;
 
     @OneToOne
     @MapsId

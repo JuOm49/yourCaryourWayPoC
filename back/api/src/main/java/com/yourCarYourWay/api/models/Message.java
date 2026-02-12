@@ -11,24 +11,24 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Messages")
+@Table(name = "messages")
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "reservation_id")
-    private long reservationId;
+    private Long reservationId;
 
     @Column(name = "client_id")
-    private long clientId;
+    private Long clientId;
 
     @Column(name = "operator_id")
-    private long operatorId;
+    private Long operatorId;
 
     @Column(name = "ticket_id")
-    private long ticketId;
+    private Long ticketId;
 
     private String title;
 

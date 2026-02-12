@@ -9,19 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class MessageController {
 
-    private MessageService messageService;
+    private final MessageService messageService;
 
     public MessageController(MessageService messageService) {
         this.messageService = messageService;
     }
 
-    @GetMapping("/messages")
-    public ResponseEntity<Message[]>getMessagesByClientId(@PathVariable Long clientId, @PathVariable Long ticketId)
+    @GetMapping("/messages/{clientId}/{ticketId}")
+    public ResponseEntity<List<Message>> getMessagesByClientIdAndTicketId(@PathVariable Long clientId, @PathVariable Long ticketId)
     {
-         return messageService.getMessagesByClientId(clientId, ticketId);
+        List<Message> messages = messageService.getMessagesByClientIdAndTicketId(clientId, ticketId);
+        return ResponseEntity.ok(messages);
     }
 }

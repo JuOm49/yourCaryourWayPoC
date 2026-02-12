@@ -9,9 +9,13 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
 
-    public List<Message> getMessagesByClientId(Long clientId, Long ticketId) {
-        return (List<Message>) messageRepository.findAll();
+    public MessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+
+    public List<Message> getMessagesByClientIdAndTicketId(Long clientId, Long ticketId) {
+        return messageRepository.findByClientIdAndTicketId(clientId, ticketId);
     }
 }
