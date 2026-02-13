@@ -1,10 +1,8 @@
 <div>
-    <h1>PoC YourCarYourWay chat</h1>
-
-    <h3>Bienvenue  nom du client ou nom de l'opérateur</h3>
+    <h3>Bienvenue {{ getUserDisplayName() }}</h3>
 </div> 
-<div *ngFor="let ticket of tickets$ | async"> 
-    <h4>{{ ticket.subject }}</h4> 
-    <p>{{ ticket.client_id }}</p>
+<div class="ticket" *ngFor="let ticket of tickets$ | async"> 
+    <h4>{{ ticket.id }} - {{ ticket.subject }}</h4> 
+    <p>client: {{ ticket.clientId }}</p>
     <button (click)="openChat(ticket.id)">Clic pour accéder au chat</button>
 </div> 
