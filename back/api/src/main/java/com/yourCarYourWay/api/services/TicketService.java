@@ -18,4 +18,16 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
+    public Ticket createTicket(Ticket ticket) {
+        return ticketRepository.save(ticket);
+    }
+
+    public List<Ticket> findByClientId(Long clientId) {
+        return ticketRepository.findByClientId(clientId);
+    }
+
+    public Ticket getTicketById(Long id) {
+        return ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
+    }
+
 }

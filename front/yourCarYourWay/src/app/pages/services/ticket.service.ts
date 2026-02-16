@@ -20,4 +20,12 @@ export class TicketService {
         );
     }
 
+    getTicketsByClientId(clientId: number): Observable<Ticket[]> {
+        return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets/client/${clientId}`).pipe(
+            catchError((error) => {
+                console.error('Error fetching tickets for client:', error);
+                throw error;
+            })
+        );
+    }
 }

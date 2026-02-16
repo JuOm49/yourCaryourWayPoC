@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -24,6 +23,13 @@ public class TicketController {
     public ResponseEntity<Iterable<Ticket>> getAllTickets()
     {
         Iterable<Ticket> tickets = ticketService.getAllTickets();
+        return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("/tickets/client/{clientId}")
+    public ResponseEntity<Iterable<Ticket>> getTicketsByClientId(@PathVariable Long clientId)
+    {
+        Iterable<Ticket> tickets = ticketService.findByClientId(clientId);
         return ResponseEntity.ok(tickets);
     }
 }

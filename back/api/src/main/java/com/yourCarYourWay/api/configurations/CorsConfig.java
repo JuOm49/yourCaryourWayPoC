@@ -16,6 +16,10 @@ public class CorsConfig {
         config.addAllowedMethod("*");
         config.setAllowCredentials(true);
 
+        // Configuration SSE
+        config.addExposedHeader("Cache-Control");
+        config.addExposedHeader("Content-Type");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", config);
 
