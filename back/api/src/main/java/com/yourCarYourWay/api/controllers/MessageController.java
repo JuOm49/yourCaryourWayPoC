@@ -43,15 +43,8 @@ public class MessageController {
             return ResponseEntity.notFound().build();
         }
 
-        //à modifier pour différencier les messages selon le rôle de l'utilisateur (client ou opérateur) à faire lundi
         messages = messageService.getMessagesByTicketId(ticketId);
-//        if(userDto.getRole() != null) {
-//            messages = messageService.getMessagesByTicketId(ticketId);
-//        }
-//        else {
-//
-//            messages = messageService.getMessagesByTicketId(ticketId);
-//        }
+
         return ResponseEntity.ok(messages);
     }
 

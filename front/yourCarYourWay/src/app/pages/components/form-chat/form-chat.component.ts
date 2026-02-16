@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { MessageService } from '../../services/message.service';
 import { SessionService } from '../../../shared/services/session.service';
 import { SseChatService } from '../../../shared/services/sse-chat.service';
-import { Message, CreateMessage } from '../../interfaces/message.interface';
-import { Observable, take, Subscription } from 'rxjs';
+import { Message } from '../../interfaces/message.interface';
+import { take, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-form-chat',
@@ -28,7 +28,7 @@ export class FormChatComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     public sessionService: SessionService,
     private sseChatService: SseChatService,
-    private cdr: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class FormChatComponent implements OnInit, OnDestroy {
     if (this.sseSubscription) {
       this.sseSubscription.unsubscribe();
     }
-    this.sseChatService.disconnect();
+    this.sseChatService.disconnectSSE();
   }
 
   /**
@@ -66,13 +66,12 @@ export class FormChatComponent implements OnInit, OnDestroy {
               this.messages.push(newMessage);
               this.messages.sort((a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime());
               
-              // Forcer Angular à détecter les changements pour mettre à jour la vue
-              this.cdr.detectChanges();
+              this.changeDetectorRef.detectChanges();
             }
           }
         },
         error: (error) => {
-          console.error('Erreur dans l\'observable SSE:', error);
+          console.error('Erreur with SSE observable :', error);
         }
       });
     }
@@ -98,10 +97,15 @@ export class FormChatComponent implements OnInit, OnDestroy {
   }
 
   sendMessage(): void {
+
+    if(!this.sseChatService.isConnectedToSSE()) {
+      console.warn('SSE connection is not active. Message will be sent but may not appear in real-time.');
+    }
+
     if (this.newMessage.trim() && this.ticketId && this.sessionService.user) {
       this.isSending = true;
       
-      const newMsg: CreateMessage = {
+      const newMsg: Message = {
         ticketId: this.ticketId!,
         clientId:  this.sessionService.user?.role === null ? this.sessionService.user!.id : 0,
         operatorId: this.sessionService.user?.role !== null ? this.sessionService.user!.id : 0,

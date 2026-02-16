@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
 
-import { Message, CreateMessage } from "../interfaces/message.interface";
+import { Message } from "../interfaces/message.interface";
 
 import { environment } from "../../../environments/environments";
 import { catchError, Observable } from "rxjs";
@@ -22,7 +22,7 @@ export class MessageService {
         );
     }
     
-    createMessage(newMessage: CreateMessage): Observable<void> {
+    createMessage(newMessage: Message): Observable<void> {
         return this.http.post<void>(`${environment.apiUrl}/messages/create`, newMessage).pipe(
             catchError((error) => {
                 console.error('Error creating message:', error);

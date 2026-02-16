@@ -72,8 +72,7 @@ public class ChatSseController {
             return;
         }
 
-        // Convertir Message en DTO pour éviter les problèmes de sérialisation
-        MessageSseDto messageDto = MessageSseDto.fromMessage(message);
+        MessageSseDto messageSseDto = MessageSseDto.fromMessage(message);
 
         List<SseEmitter> deadEmitters = new ArrayList<>();
 
@@ -82,10 +81,10 @@ public class ChatSseController {
 
         emittersCopy.forEach(emitter -> {
             try {
-                // Vérifier si l'emitter est encore utilisable
+                // Vérifier si l'émetteur est encore utilisable
                 emitter.send(SseEmitter.event()
                         .name("message")
-                        .data(messageDto));
+                        .data(messageSseDto));
             } catch ( java.lang.IllegalStateException | IOException e) {
                 deadEmitters.add(emitter);
             } catch (Exception e) {
@@ -111,7 +110,7 @@ public class ChatSseController {
         } catch (Exception e) {
         }
 
-        // Essayer de fermer proprement l'emitter
+        // fermer proprement l'émetteur
         try {
             emitter.complete();
         } catch (Exception e) {

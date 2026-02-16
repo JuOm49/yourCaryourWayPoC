@@ -16,7 +16,7 @@ public class CorsConfig {
         config.addAllowedMethod("*");
         config.setAllowCredentials(true);
 
-        // Configuration spécifique pour SSE
+        // Configuration SSE
         config.addExposedHeader("Cache-Control");
         config.addExposedHeader("Content-Type");
 

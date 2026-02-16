@@ -19,7 +19,7 @@ export class SseChatService {
    */
   connectToTicket(ticketId: number): void {
     // Fermer la connexion précédente si elle existe
-    this.disconnect();
+    this.disconnectSSE();
 
     const sseUrl = `${environment.apiUrl}/chat/stream/${ticketId}`;
 
@@ -72,7 +72,7 @@ export class SseChatService {
   /**
    * Fermer la connexion SSE
    */
-  disconnect(): void {
+  disconnectSSE(): void {
     if (this.eventSource) {
       this.eventSource.close();
       this.eventSource = null;
