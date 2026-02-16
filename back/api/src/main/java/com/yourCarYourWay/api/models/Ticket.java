@@ -11,20 +11,20 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Tickets")
+@Table(name = "tickets")
 public class Ticket {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "client_id")
-    private long clientId;
+    private Long clientId;
 
     @Column(name = "operator_id")
-    private long operatorId;
+    private Long operatorId;
 
     @Column(name = "reservation_id")
-    private long reservationId;
+    private Long reservationId;
 
     @Column(nullable = false)
     private String subject;

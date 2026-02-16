@@ -1,1 +1,47 @@
-<p>form-chat works!</p>
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>Chat - Ticket #{{ ticketId }}</h2>
+  </div>
+  
+  <div class="messages-container">
+    <div *ngIf="isLoading" class="loading">Chargement des messages...</div>
+    
+    <div *ngFor="let message of messages" 
+         class="message"
+         [class.my-message]="isMyMessage(message)"
+         [class.other-message]="!isMyMessage(message)">
+      
+      <div class="message-content">
+        <div class="message-text">{{ message.messageText }}</div>
+        <div class="message-time">{{ formatTime(message.sentAt) }}</div>
+      </div>
+    </div>
+    
+    <div *ngIf="messages.length === 0 && !isLoading" class="no-messages">
+      Aucun message pour le moment. Commencez la conversation !
+    </div>
+  </div>
+  
+  <div class="message-form">
+    <form (ngSubmit)="sendMessage()">
+      <div class="input-container">
+        <input 
+          type="text" 
+          [(ngModel)]="newMessage" 
+          name="messageInput"
+          placeholder="Tapez votre message..."
+          [disabled]="isSending"
+          class="message-input"
+        />
+        <button 
+          type="submit" 
+          [disabled]="!newMessage.trim() || isSending"
+          class="send-button"
+        >
+          <span *ngIf="!isSending">Envoyer</span>
+          <span *ngIf="isSending">...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

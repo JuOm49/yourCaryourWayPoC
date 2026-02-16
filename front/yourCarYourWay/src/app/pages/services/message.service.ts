@@ -6,25 +6,15 @@ import { Message } from "../interfaces/message.interface";
 
 import { environment } from "../../../environments/environments";
 import { catchError, Observable } from "rxjs";
-import { Ticket } from "../interfaces/ticket.interface";
 
 @Injectable({
     providedIn: 'root'
 })
 export class MessageService {
     constructor(private http: HttpClient) {}
-
-    getTickets(): Observable<Ticket[]> {
-        return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets`).pipe(
-            catchError((error) => {
-                console.error('Error fetching tickets:', error);
-                throw error;
-            })
-        );
-    }
     
-    getMessagesByClientId(clientId: number, ticketId: number): Observable<Message[]> {
-        return this.http.get<Message[]>(`${environment.apiUrl}/messages/${clientId}/${ticketId}`).pipe(
+    getMessagesByUserId(userId: number, ticketId: number): Observable<Message[]> {
+        return this.http.get<Message[]>(`${environment.apiUrl}/messages/${userId}/${ticketId}`).pipe(
             catchError((error) => {
                 console.error('Error fetching messages:', error);
                 throw error;
@@ -32,8 +22,8 @@ export class MessageService {
         );
     }
     
-    createMessage(message: string, ticketId: number, userId: number): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrl}/messages`, { message, ticketId, userId }).pipe(
+    createMessage(newMessage: Message): Observable<void> {
+        return this.http.post<void>(`${environment.apiUrl}/messages/create`, newMessage).pipe(
             catchError((error) => {
                 console.error('Error creating message:', error);
                 throw error;
