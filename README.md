@@ -12,6 +12,17 @@ Proof of Concept (PoC) for the **Your Car Your Way** application.
 
 ---
 
+## Database Setup
+
+To use this project, you need to set up the MySQL database using the provided SQL script.
+
+### Steps to Initialize the Database
+
+1. **Ensure MySQL is installed** on your system.
+2. **Open a MySQL client** (e.g., MySQL Workbench, command line, or any other MySQL client).
+3. **Run the following SQL script located in the sql folder** to create the database and tables:
+   open and execute the file `script_your_car_your_way_db.sql` using your MySQL client.
+
 ## Installation & Setup
 
 ### 1. Clone the Project
@@ -37,4 +48,5 @@ mvn spring-boot\:run
 ```
 
 The backend will start on the default port: http://localhost:8080
+
 
